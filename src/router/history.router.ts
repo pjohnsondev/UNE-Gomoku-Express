@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import validateSchema from "../middleware/validateSchema";
 
 const historyRouter = express.Router();
 

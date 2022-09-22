@@ -1,0 +1,73 @@
+import { object, string, array, number, date, TypeOf } from "zod";
+
+const payload = {
+    // TODO: setup Payload
+    body: object({
+        id: number({    
+            required_error: "Game id is required",
+        }),
+        boardSize: number({
+            required_error: "Board size is required",
+        }),
+        winner: string({
+            required_error: "Winner is required",
+        }),
+        date: date({
+            required_error: "Winner is required",
+        }),
+        moves: number({ 
+            required_error: "Winner is required",
+        }).array()
+    })
+}
+
+const getParams = {
+    params: object({
+        id: number({
+            required_error: "Game id is required",
+        })
+    })
+}
+
+const updateDeleteParams = {
+    params: object ({
+        id: number({
+            required_error: "Game id is required",
+        })
+    })
+}
+
+const createParams = {
+    params: object({
+        boardSize: number({
+            required_error: "Board size is required",
+        })
+    })
+}
+
+//schema to create new game in the database
+export const createGameSchema = object({
+    ...payload,
+    ...createParams
+});
+
+//schema to update game in database during gameplay
+export const updateGameSchema = object({
+    ...payload,
+    ...updateDeleteParams
+});
+
+// schema to delete unfinished game from the database
+export const deleteGameSchema = object({
+    ...updateDeleteParams
+});
+
+// schema to get current game
+export const getGameSchema = object({
+    ...getParams
+});
+
+export type CreateGameInput = TypeOf<typeof createGameSchema>;
+export type UpdateGameInput = TypeOf<typeof updateGameSchema>;
+export type ReadGameInput = TypeOf<typeof getGameSchema>;
+export type DeleteGameInput = TypeOf<typeof deleteGameSchema>;
