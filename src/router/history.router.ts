@@ -1,3 +1,8 @@
+/*
+    Todo: This may be an unneccessary route. Look into further
+*/
+
+
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
 

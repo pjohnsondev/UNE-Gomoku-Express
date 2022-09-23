@@ -1,7 +1,6 @@
 import { object, string, array, number, date, TypeOf } from "zod";
 
 const payload = {
-    // TODO: setup Payload
     body: object({
         id: number({    
             required_error: "Game id is required",
