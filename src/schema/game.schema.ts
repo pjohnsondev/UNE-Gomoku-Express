@@ -1,4 +1,5 @@
 import { object, string, array, number, date, TypeOf } from "zod";
+// TODO: Import User object
 
 const payload = {
     body: object({
@@ -17,6 +18,7 @@ const payload = {
         moves: number({ 
             required_error: "Winner is required",
         }).array()
+        // TODO: add playerWhite and PlayerBlack keys with user object value
     })
 }
 
