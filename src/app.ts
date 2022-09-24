@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
 
-import connectDB from "../util/connectDB"
+import connectDB from "./util/connectDB"
 import historyRouter from "./router/history.router"
 import gameRouter from "./router/game.router"
 

@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 import userModel, { UserDocument } from "./user.model";
 
 export interface GameDocument extends Document {
-    gameId: number,
+    gameId: string,
     boardSize: number,
     winner: string,
     date: Date,
@@ -12,7 +12,7 @@ export interface GameDocument extends Document {
 }
 
 const gameSchema = new mongoose.Schema({
-    gameId: Number,
+    gameId: String,
     boardSize: Number,
     winner: String,
     date: Date,

@@ -1,0 +1,12 @@
+[
+    {
+        "_id": "632ee39cf82770bfff38db83",
+        "username": "paul",
+        "password": "test123"
+    },
+    {
+        "_id": "632ee3f3f82770bfff38db84",
+        "username": "alsoPaul",
+        "password": "test123"
+    }
+]

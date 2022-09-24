@@ -3,7 +3,7 @@ import { object, string, array, number, date, TypeOf } from "zod";
 
 const payload = {
     body: object({
-        id: number({    
+        id: string({    
             required_error: "Game id is required",
         }),
         boardSize: number({
@@ -24,7 +24,7 @@ const payload = {
 
 const getParams = {
     params: object({
-        id: number({
+        id: string({
             required_error: "Game id is required",
         })
     })
@@ -32,7 +32,7 @@ const getParams = {
 
 const updateDeleteParams = {
     params: object ({
-        id: number({
+        id: string({
             required_error: "Game id is required",
         })
     })
