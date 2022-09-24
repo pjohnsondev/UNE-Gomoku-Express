@@ -6,10 +6,10 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
 
-const historyRouter = express.Router();
+const historyHandler = express.Router();
 
 // Get Games
-historyRouter.get("/", (req: Request, res: Response) => {
+historyHandler.get("/", (req: Request, res: Response) => {
     // TODO replace temporary data below with calls to server
     res.status(200).json([
         {
@@ -25,4 +25,4 @@ historyRouter.get("/", (req: Request, res: Response) => {
     ])
 })
 
-export default historyRouter;
+export default historyHandler;

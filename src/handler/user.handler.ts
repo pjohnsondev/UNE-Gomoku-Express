@@ -3,16 +3,16 @@ import { request } from "http";
 import validateSchema from "../middleware/validateSchema";
 import { createUserSchema, getUserSchema } from "../schema/user.shema";
 
-const userRouter = express.Router();
+const userHandler = express.Router();
 
 // Create User
-userRouter.post("/signup", validateSchema(createUserSchema), (req: Request, res: Response) => {
+userHandler.post("/signup", validateSchema(createUserSchema), (req: Request, res: Response) => {
     const user = req.params;
     res.status(200).json(user.username)
 })  
 
 // Get User
-userRouter.get("/login", validateSchema(getUserSchema), (req: Request, res: Response) => {
+userHandler.get("/login", validateSchema(getUserSchema), (req: Request, res: Response) => {
     const user = req.params;
     res.status(200).json(user.name)
 })
@@ -23,4 +23,4 @@ userRouter.get("/login", validateSchema(getUserSchema), (req: Request, res: Resp
 // TODO: Add ability tofor user to delete account
 // Delete User
 
-export default userRouter;
+export default userHandler;

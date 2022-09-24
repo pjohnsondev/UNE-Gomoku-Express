@@ -3,9 +3,9 @@ import dotenv from 'dotenv';
 import mongoose from "mongoose";
 
 import connectDB from "./util/connectDB"
-import historyRouter from "./router/history.router"
-import gameRouter from "./router/game.router"
-import userRouter from "./router/user.router"
+import historyHandler from "./handler/history.handler"
+import gameHandler from "./handler/game.handler"
+import userHandler from "./handler/user.handler"
 
 dotenv.config();
 
@@ -16,9 +16,9 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.use(express.json())
-app.use("/history", historyRouter)
-app.use("/game", gameRouter)
-app.use("/user", userRouter)
+app.use("/history", historyHandler)
+app.use("/game", gameHandler)
+app.use("/user", userHandler)
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Great Success");
