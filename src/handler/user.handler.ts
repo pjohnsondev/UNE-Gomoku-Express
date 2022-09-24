@@ -22,3 +22,5 @@ userRouter.get("/login", validateSchema(getUserSchema), (req: Request, res: Resp
 
 // TODO: Add ability tofor user to delete account
 // Delete User
+
+export default userRouter;

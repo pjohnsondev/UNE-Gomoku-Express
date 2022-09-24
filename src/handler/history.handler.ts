@@ -25,18 +25,4 @@ historyRouter.get("/", (req: Request, res: Response) => {
     ])
 })
 
-// Get Log of Specific Game
-historyRouter.get("/:id", (req:Request, res: Response) => {
-    // TODO replace temporary data below with calls to server
-    res.status(200).json([
-        {
-            "_id": 1,
-            "boardSize": 9,
-            "winner": "white",
-            "date": Date, 
-            "moves": [10,6,9,8,4,3]
-        },
-    ])
-})
-
 export default historyRouter;

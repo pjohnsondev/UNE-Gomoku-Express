@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import connectDB from "./util/connectDB"
 import historyRouter from "./router/history.router"
 import gameRouter from "./router/game.router"
+import userRouter from "./router/user.router"
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const port = process.env.PORT;
 app.use(express.json())
 app.use("/history", historyRouter)
 app.use("/game", gameRouter)
+app.use("/user", userRouter)
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Great Success");

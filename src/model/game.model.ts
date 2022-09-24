@@ -1,6 +1,8 @@
 import mongoose, { Document } from "mongoose";
 import userModel, { UserDocument } from "./user.model";
 
+// TODO: Consider breaking the game model into smaller models
+
 export interface GameDocument extends Document {
     gameId: string,
     boardSize: number,
