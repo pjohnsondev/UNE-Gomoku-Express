@@ -11,26 +11,36 @@ gameHandler.get("/", async (req: Request, res: Response) => {
       const result = await getAllGames();
       //TODO: add current user ID below rather than hard code
       const userId = "632ee39cf82770bfff38db83"
-      return res.status(200).send(result.map(g => (g.playerBlack == userId || g.playerWhite == userId) ?
-        {
-          _id: g._id,
-          winner: g.winner,
-          date: g.date
+      return res.status(200).send(result.map(g => {
+        if(g.playerBlack == userId || g.playerWhite == userId){
+          return {
+            _id: g._id,
+            winner: g.winner,
+            date: g.date
+          }
         }
-       : null));
+      }))
     } catch (err) {
       return res.status(500).send(err);
     };
 })
 
 // Get Specific Game
-// TODO: Potentially pass users to the json res so that users can be displayed in game history also
 gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Request, res: Response) => {
-    const game = await getGameById(req.params.gameId);
-    if (!game) {
+    try {
+      const game = await getGameById(req.params.gameId);
+      //TODO: add current user ID below rather than hard code
+      const userId = "632ee39cf82770bfff38db83"
+      if (!game) {
         return res.sendStatus(404);
-    }
-    return res.status(200).json({...game});
+      } else if (userId !== game.playerBlack || userId !== game.playerWhite){
+        return res.redirect("/")
+      }
+      // TODO: Potentially pass users to the json res so that users can be displayed in game history also (e.g. display "Paul v James: Winner James")
+      return res.status(200).json({...game});
+    } catch (err) {
+      return res.status(500).send(err);
+    };
 })  
 
 // Create Game
