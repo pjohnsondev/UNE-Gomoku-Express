@@ -1,6 +1,5 @@
-import mongoose, { DocumentDefinition, FilterQuery } from 'mongoose';
-import activGameModel from '../model/activGame.model';
-import ActiveGameModel, {ActiveGameDocument} from '../model/activGame.model';
+import mongoose, { DocumentDefinition } from 'mongoose';
+import ActiveGameModel, {ActiveGameDocument} from '../model/activeGame.model';
 
 export async function getActiveGameById(gameId: string){
     return await ActiveGameModel.findById(gameId);
@@ -15,9 +14,15 @@ export async function createActiveGame(input: DocumentDefinition<ActiveGameDocum
 }
 
 export async function updateActiveGame(gameId: string, input: DocumentDefinition<ActiveGameDocument>){
-    return activGameModel.findOneAndUpdate(
+    return ActiveGameModel.findOneAndUpdate(
         {_id: new mongoose.Types.ObjectId(gameId)},
         input,
         {new: true}
     )
 }
+
+export async function deletActiveGame(gameId: string) {
+    return ActiveGameModel.deleteOne({
+      _id: new mongoose.Types.ObjectId(gameId)
+    })
+  }

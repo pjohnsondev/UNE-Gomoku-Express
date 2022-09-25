@@ -1,11 +1,9 @@
 import express, { Request, Response } from "express";
-import mongoose from "mongoose";
 
 import validateSchema from "../middleware/validateSchema";
 
 import { createGameSchema, getGameByIdSchema } from "../schema/game.schema";
 import { createGame, getGameById, getAllGamesDataByUser } from "../service/game.service";
-import { exportCompletedGame } from "../service/activeGame.service";
 
 const gameHandler = express.Router();
 

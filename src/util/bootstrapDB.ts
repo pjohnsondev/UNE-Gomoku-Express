@@ -7,6 +7,9 @@ import users from "../data/users.json";
 import GameModel from '../model/game.model';
 import games from '../data/games.json';
 
+import ActiveGameModel from '../model/activeGame.model';
+import activeGames from '../data/activeGame.json';
+
 const run = async () => {
   try {
     await connect();
@@ -18,6 +21,9 @@ const run = async () => {
 
     await GameModel.deleteMany();
     await GameModel.insertMany(games);
+
+    await ActiveGameModel.deleteMany();
+    await ActiveGameModel.insertMany(activeGames);
 
     process.exit(0)
   } catch (err) {
