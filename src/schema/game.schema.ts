@@ -1,9 +1,9 @@
-import { object, string, array, number, date, TypeOf } from "zod";
+import { object, string, number, date, TypeOf } from "zod";
 // TODO: Import User object
 
 const payload = {
     body: object({
-        id: string({    
+        gameId: string({    
             required_error: "Game id is required",
         }),
         boardSize: number({
@@ -13,12 +13,17 @@ const payload = {
             required_error: "Winner is required",
         }),
         date: date({
-            required_error: "Winner is required",
+            required_error: "Date is required",
         }),
         moves: number({ 
-            required_error: "Winner is required",
-        }).array()
-        // TODO: add playerWhite and PlayerBlack keys with user object value
+            required_error: "Moves array is required",
+        }).array(),
+        playerWhite: string({
+            required_error: "White player userId is required",
+        }),
+        playerBlack: string({
+            required_error: "Black player userId is required",
+        }),
     })
 }
 
@@ -38,28 +43,24 @@ const updateDeleteParams = {
     })
 }
 
-const createParams = {
-    params: object({
-        boardSize: number({
-            required_error: "Board size is required",
+const createGameParams = {
+    params: object ({
+        gameId: string({
+            required_error: "Game id is required",
         })
     })
 }
 
+
 //schema to create new game in the database
 export const createGameSchema = object({
     ...payload,
-    ...createParams
+    ...createGameParams
 });
 
 //schema to update game in database during gameplay
 export const updateGameSchema = object({
     ...payload,
-    ...updateDeleteParams
-});
-
-// schema to delete unfinished game from the database
-export const deleteGameSchema = object({
     ...updateDeleteParams
 });
 
@@ -69,6 +70,5 @@ export const getGameByIdSchema = object({
 });
 
 export type CreateGameInput = TypeOf<typeof createGameSchema>;
-export type UpdateGameInput = TypeOf<typeof updateGameSchema>;
 export type ReadGameInput = TypeOf<typeof getGameByIdSchema>;
-export type DeleteGameInput = TypeOf<typeof deleteGameSchema>;
+export type UpdateGameInput = TypeOf<typeof updateGameSchema>;
