@@ -1,4 +1,4 @@
-import { object, string, number, date, TypeOf } from "zod";
+import { object, string, number, array, date, TypeOf } from "zod";
 // TODO: Import User object
 
 const payload = {
@@ -15,9 +15,9 @@ const payload = {
         date: date({
             required_error: "Date is required",
         }),
-        moves: number({ 
+        moves: array(number({ 
             required_error: "Moves array is required",
-        }).array(),
+        })).nonempty(),
         playerWhite: string({
             required_error: "White player userId is required",
         }),
