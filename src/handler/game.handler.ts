@@ -1,7 +1,11 @@
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
+
 import validateSchema from "../middleware/validateSchema";
-import { createGameSchema, deleteGameSchema, getGameByIdSchema, updateGameSchema } from "../schema/game.schema";
-import { getAllGames, getGameById, getAllGamesDataByUser } from "../service/game.service";
+
+import { createGameSchema, getGameByIdSchema } from "../schema/game.schema";
+import { createGame, getGameById, getAllGamesDataByUser } from "../service/game.service";
+import { exportCompletedGame } from "../service/activeGame.service";
 
 const gameHandler = express.Router();
 
@@ -27,7 +31,9 @@ gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Reque
       const userId = "632ee39cf82770bfff38db83"
       if (!game) {
         return res.sendStatus(404);
-      } else if (userId !== game.playerBlack || userId !== game.playerWhite){
+      } 
+      // ensure users can only view their own games
+      else if (userId != game.playerBlack && userId != game.playerWhite){
         return res.redirect("/")
       }
       // TODO: Potentially pass users to the json res so that users can be displayed in game history also (e.g. display "Paul v James: Winner James")
@@ -38,23 +44,10 @@ gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Reque
 })  
 
 // Create Game
-gameHandler.post("/:gameChoice", validateSchema(createGameSchema), (req: Request, res: Response) => {
-    const game = req.params
-    res.status(200).json(game)
-})
-
-// Update game
-gameHandler.put(":id", validateSchema(updateGameSchema), (req: Request, res: Response) => {
-    // TODO: update in storage
-    const game = req.params
-    res.status(200).json(game)
-})
-
-// Delete Game
-gameHandler.delete("/:id", validateSchema(deleteGameSchema), (req: Request, res: Response) => {
-    console.log('Deleted')
-    // TODO: delete from storage
-    res.status(200);
+gameHandler.post("/", validateSchema(createGameSchema), async (req: Request, res: Response) => {
+    const game = req.body
+    const newGame = await createGame(game);
+    return res.status(200).send(newGame);
 })
 
 export default gameHandler

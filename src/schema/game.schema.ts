@@ -35,14 +35,6 @@ const getParams = {
     })
 }
 
-const updateDeleteParams = {
-    params: object ({
-        gameId: string({
-            required_error: "Game id is required",
-        })
-    })
-}
-
 const createGameParams = {
     params: object ({
         gameId: string({
@@ -58,17 +50,10 @@ export const createGameSchema = object({
     ...createGameParams
 });
 
-//schema to update game in database during gameplay
-export const updateGameSchema = object({
-    ...payload,
-    ...updateDeleteParams
-});
-
-// schema to get current game
+// schema to get game
 export const getGameByIdSchema = object({
     ...getParams
 });
 
 export type CreateGameInput = TypeOf<typeof createGameSchema>;
 export type ReadGameInput = TypeOf<typeof getGameByIdSchema>;
-export type UpdateGameInput = TypeOf<typeof updateGameSchema>;

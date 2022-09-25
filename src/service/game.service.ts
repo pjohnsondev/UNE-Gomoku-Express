@@ -1,8 +1,8 @@
-import mongoose, { FilterQuery } from 'mongoose';
-import GameModel from '../model/game.model';
+import mongoose, { DocumentDefinition, FilterQuery } from 'mongoose';
+import GameModel, { GameDocument } from '../model/game.model';
 
-export async function getAllGames() {
-  return await GameModel.find().lean();
+export async function getGameById(id: string) {
+    return await GameModel.findById(id).lean();
 }
 
 export async function getAllGamesDataByUser(userId: string){
@@ -16,7 +16,7 @@ export async function getAllGamesDataByUser(userId: string){
                 ]
             }
         },
-        // transform the return with $project
+        // transform the return with $project 
         {
             $project: {
                 gameId: 1,
@@ -25,9 +25,8 @@ export async function getAllGamesDataByUser(userId: string){
             }
         },
     ])
-
 }
 
-export async function getGameById(id: string) {
-  return await GameModel.findById(id).lean();
+export async function createGame(input: DocumentDefinition<GameDocument>){
+    return GameModel.create(input); 
 }
