@@ -1,6 +1,9 @@
 [
     {
         "_id": "62f875f70860a1d7140f99d33",
+        "boardSize": 9,
+        "winner": "white",
+        "date": "2022-03-12",
         "moves": [22,16,23,1,2,44],
         "playerBlack": "632ee3f3f82770bfff38db84",
         "playerWhite": "632ee39cf82770bfff38db83"
