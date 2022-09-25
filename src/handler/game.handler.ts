@@ -1,28 +1,22 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
 import { createGameSchema, deleteGameSchema, getGameByIdSchema, updateGameSchema } from "../schema/game.schema";
-import { getAllGames, getGameById } from "../service/game.service";
+import { getAllGames, getGameById, getAllGamesDataByUser } from "../service/game.service";
 
 const gameHandler = express.Router();
 
-// Get ALL Games
+// Get all games for current user
 gameHandler.get("/", async (req: Request, res: Response) => {
     try {
-      const result = await getAllGames();
       //TODO: add current user ID below rather than hard code
       const userId = "632ee39cf82770bfff38db83"
-      return res.status(200).send(result.map(g => {
-        if(g.playerBlack == userId || g.playerWhite == userId){
-          return {
-            _id: g._id,
-            winner: g.winner,
-            date: g.date
-          }
-        }
-      }))
-    } catch (err) {
+
+      const games = await getAllGamesDataByUser(userId);
+
+      res.status(200).json(games)
+    } catch(err) {
       return res.status(500).send(err);
-    };
+    }
 })
 
 // Get Specific Game

@@ -2,11 +2,13 @@
     {
         "_id": "632ee39cf82770bfff38db83",
         "username": "paul",
-        "password": "test123"
+        "password": "test123",
+        "games": ["62f875f70860a1d7140f99d1", "62f875f70860a1d7140f99d2"]
     },
     {
         "_id": "632ee3f3f82770bfff38db84",
         "username": "alsoPaul",
-        "password": "test123"
+        "password": "test123",
+        "games": ["62f875f70860a1d7140f99d1", "62f875f70860a1d7140f99d2"]
     }
 ]
