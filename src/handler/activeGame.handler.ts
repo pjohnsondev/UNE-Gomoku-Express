@@ -11,7 +11,7 @@ activeGameHandler.get("/", (req: Request, res: Response) => {
 })
 
 // Create Game
-activeGameHandler.post("/", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
+activeGameHandler.post("/:gameId", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
     const game = req.body;
     const newActiveGame = await createActiveGame(game)
     res.status(200).json(newActiveGame)
@@ -46,7 +46,7 @@ activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async 
     // Ensure tile isn't already occupied in moves
     const existingGame = await getActiveGameById(gameId)
     const existingMoves = existingGame?.moves;
-    if(existingMoves?.includes(game.moves[game.moves.length()-1])){
+    if(existingMoves?.includes(game.moves[game.moves.length-1])){
         res.sendStatus(400);
     }
 

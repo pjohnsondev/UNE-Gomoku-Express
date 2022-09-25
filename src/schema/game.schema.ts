@@ -1,4 +1,4 @@
-import { object, string, number, array, date, TypeOf } from "zod";
+import { object, string, number, array, TypeOf } from "zod";
 // TODO: Import User object
 
 const payload = {
@@ -12,7 +12,7 @@ const payload = {
         winner: string({
             required_error: "Winner is required",
         }),
-        date: date({
+        date: string({
             required_error: "Date is required",
         }),
         moves: array(number({ 
@@ -47,7 +47,7 @@ const createGameParams = {
 //schema to create new game in the database
 export const createGameSchema = object({
     ...payload,
-    ...createGameParams
+    // ...createGameParams
 });
 
 // schema to get game

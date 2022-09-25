@@ -1,18 +1,15 @@
-import { object, string, number, array, date, TypeOf } from "zod";
-// TODO: Import User object
+import { object, string, number, array, TypeOf } from "zod";
+
 
 const payload = { 
     body: object({
-        gameId: string({    
+        _id: string({    
             required_error: "Game id is required",
         }),
         boardSize: number({
             required_error: "Board size is required",
         }),
-        winner: string({
-            required_error: "Winner is required",
-        }),
-        date: date({
+        date: string({
             required_error: "Date is required",
         }),
         moves: array(number({ 

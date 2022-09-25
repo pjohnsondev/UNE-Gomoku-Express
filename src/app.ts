@@ -15,10 +15,11 @@ connectDB();
 const app: Express = express();
 const port = process.env.PORT;
 
+// The decision to create a seperate active game handler was made to allow the possibility of multiple active games being performed at once
 app.use(express.json())
-app.use("/game", gameHandler)
-app.use("/user", userHandler)
-app.use("/active", activeGameHandler)
+app.use("/api/game", gameHandler)
+app.use("/api/user", userHandler)
+app.use("/api/active", activeGameHandler)
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Great Success");

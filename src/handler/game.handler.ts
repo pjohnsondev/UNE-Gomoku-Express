@@ -11,8 +11,9 @@ const gameHandler = express.Router();
 gameHandler.get("/", async (req: Request, res: Response) => {
     try {
       //TODO: add current user ID below rather than hard code
-      const userId = "632ee39cf82770bfff38db83"
-
+      const userId = req.body.user;
+      console.log(userId)
+  
       const games = await getAllGamesDataByUser(userId);
 
       res.status(200).json(games)
