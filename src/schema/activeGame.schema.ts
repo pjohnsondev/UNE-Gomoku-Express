@@ -1,7 +1,7 @@
 import { object, string, number, array, date, TypeOf } from "zod";
 // TODO: Import User object
 
-const payload = {
+const payload = { 
     body: object({
         gameId: string({    
             required_error: "Game id is required",

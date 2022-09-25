@@ -1,7 +1,7 @@
 import mongoose, {Document, MongooseError} from "mongoose";
 import userModel, {UserDocument} from "./user.model";
 
-export interface AcitveGameDocument extends Document {
+export interface ActiveGameDocument extends Document {
     gameId: string,
     boardSize: number,
     winner: string,
@@ -21,4 +21,4 @@ const activeGameSchema = new mongoose.Schema({
     playerWhite: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
 })
 
-export default mongoose.model<AcitveGameDocument>("ActiveGame", activeGameSchema);
+export default mongoose.model<ActiveGameDocument>("ActiveGame", activeGameSchema);

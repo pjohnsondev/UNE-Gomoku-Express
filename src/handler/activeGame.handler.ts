@@ -1,27 +1,62 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
-import { createGameSchema, deleteGameSchema, getGameByIdSchema, updateGameSchema } from "../schema/game.schema";
-import { getGameById, getAllGamesDataByUser } from "../service/game.service";
+import { createActiveGameSchema, deleteActiveGameSchema, getActiveGameByIdSchema, updateActiveGameSchema } from "../schema/activeGame.schema";
+import { createActiveGame, getActiveGameById, updateActiveGame } from "../service/activeGame.service";
 
 const activeGameHandler = express.Router();
 
+// Redirect empty get request
+activeGameHandler.get("/", (req: Request, res: Response) => {
+    res.redirect("/")
+})
+
 // Create Game
-activeGameHandler.post("/:gameChoice", validateSchema(createGameSchema), (req: Request, res: Response) => {
-    //TODO: add current user ID below rather than hard code
-   const userId = "632ee39cf82770bfff38db83"
-   const game = req.params
-   res.status(200).json(game)
+activeGameHandler.post("/", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
+    const game = req.body;
+    const newActiveGame = await createActiveGame(game)
+    res.status(200).json(newActiveGame)
+})
+
+// Get Active Game
+activeGameHandler.get("/:gameId", validateSchema(getActiveGameByIdSchema), async (req: Request, res: Response) => {
+    try {
+        const game = await getActiveGameById(req.params.gameId);
+        //TODO: add current user ID below rather than hard code
+        const userId = "632ee39cf82770bfff38db83"
+        if (!game) {
+          return res.sendStatus(404);
+        } 
+        // ensure users can only view their own active games
+        else if (userId != game.playerBlack && userId != game.playerWhite){
+          return res.redirect("/")
+        }
+        return res.status(200).json({...game});
+      } catch (err) {
+        return res.status(500).send(err);
+      };
 })
 
 // Update game
-activeGameHandler.put("/:gameId", validateSchema(updateGameSchema), (req: Request, res: Response) => {
+activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async (req: Request, res: Response) => {
     // TODO: update in storage
-    const game = req.params
-    res.status(200).json(game)
+    const userId = "632ee39cf82770bfff38db83"
+    const gameId = req.params.gameId;
+    const game = req.body;
+
+    // Ensure tile isn't already occupied in moves
+    const existingGame = await getActiveGameById(gameId)
+    const existingMoves = existingGame?.moves;
+    if(existingMoves?.includes(game.moves[game.moves.length()-1])){
+        res.sendStatus(400);
+    }
+
+    // Update the game in the database
+    const newActiveGame = await updateActiveGame(gameId, game)
+    res.status(200).json(newActiveGame)
 })
 
 // Delete Game
-activeGameHandler.delete("/:gameId", validateSchema(deleteGameSchema), (req: Request, res: Response) => {
+activeGameHandler.delete("/:gameId", validateSchema(deleteActiveGameSchema), (req: Request, res: Response) => {
     console.log('Deleted')
     // TODO: delete from storage
     res.status(200);
