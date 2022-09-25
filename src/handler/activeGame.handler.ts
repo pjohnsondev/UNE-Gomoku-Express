@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
 import { createActiveGameSchema, deleteActiveGameSchema, getActiveGameByIdSchema, updateActiveGameSchema } from "../schema/activeGame.schema";
-import { createActiveGame, getActiveGameById, updateActiveGame } from "../service/activeGame.service";
+import { createActiveGame, getActiveGameById, updateActiveGame, deletActiveGame } from "../service/activeGame.service";
 
 const activeGameHandler = express.Router();
 
@@ -56,9 +56,9 @@ activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async 
 })
 
 // Delete Game
-activeGameHandler.delete("/:gameId", validateSchema(deleteActiveGameSchema), (req: Request, res: Response) => {
-    console.log('Deleted')
-    // TODO: delete from storage
+activeGameHandler.delete("/:gameId", validateSchema(deleteActiveGameSchema), async (req: Request, res: Response) => {
+    const gameId = req.params.gameId;
+    await deletActiveGame(gameId);
     res.status(200);
 })
 
