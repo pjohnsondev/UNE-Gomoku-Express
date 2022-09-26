@@ -3,15 +3,13 @@ import mongoose, {Document} from "mongoose";
 export interface UserDocument extends Document {
     username: string;
     password: string;
-    createdAt: Date;
-    UpdatedAt: Date;
+    createdAt?: Date;
+    UpdatedAt?: Date;
 }
 
 const userSchema = new mongoose.Schema({
     username: {type: String, require: true, unique: true},
     password: {type: String, require: true}, 
 },{ timestamps: true })
-
-// TODO: add password comparison functionality
 
 export default mongoose.model<UserDocument>('User', userSchema)
