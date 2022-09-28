@@ -8,7 +8,7 @@ export interface GameDocument extends Document {
     boardSize: number,
     winner: string,
     date: Date,
-    moves: [number]
+    moves: [number] 
     userId: UserDocument["_id"],
 }
 

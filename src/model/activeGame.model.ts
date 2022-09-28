@@ -6,8 +6,7 @@ export interface ActiveGameDocument extends Document {
     boardSize: number,
     date: Date,
     moves: [number]
-    playerBlack: UserDocument["_id"],
-    playerWhite: UserDocument["_id"]
+    userId: UserDocument["_id"]
 }
 
 const activeGameSchema = new mongoose.Schema({
@@ -15,8 +14,7 @@ const activeGameSchema = new mongoose.Schema({
     boardSize: Number,
     date: Date,
     moves: [Number],
-    playerBlack: String,
-    playerWhite: String
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 })
 
 export default mongoose.model<ActiveGameDocument>("ActiveGame", activeGameSchema);

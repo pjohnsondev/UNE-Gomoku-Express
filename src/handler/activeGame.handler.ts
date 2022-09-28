@@ -16,25 +16,27 @@ activeGameHandler.get("/", (req: Request, res: Response) => {
 
 // Create Game
 activeGameHandler.post("/:gameId", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
-    const game = req.body;
-    const newActiveGame = await createActiveGame(game)
-    res.status(200).json(newActiveGame)
+  const userId = req.userId;  
+  const game = req.body;
+  const newActiveGame = await createActiveGame(game)
+  res.status(200).json(newActiveGame)
 })
 
 // Get Active Game
 activeGameHandler.get("/:gameId", async (req: Request, res: Response) => {
     try {
-        const game = await getActiveGameById(req.params.gameId);
-        
         const userId = req.userId;
-        console.log(userId)
+        const gameId = req.params.gameId;
+
+        // Search for game and match to user ID
+        const game = await getActiveGameById(userId, gameId);
+        
+        // send error if no game exists
         if (!game) {
           return res.sendStatus(404);
         } 
-        // ensure users can only view their own games
-      else if (userId != game.playerBlack && userId != game.playerWhite){
-        return res.redirect("/")
-      }
+
+        //return game
         return res.status(200).json({...game});
       } catch (err) {
         return res.status(500).send(err);
@@ -43,28 +45,42 @@ activeGameHandler.get("/:gameId", async (req: Request, res: Response) => {
 
 // Update game
 activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async (req: Request, res: Response) => {
-    // TODO: update in storage
-    const userId = "632ee39cf82770bfff38db83"
+  
+  try {
+    const userId = req.userId
     const gameId = req.params.gameId;
     const game = req.body;
 
-    // Ensure tile isn't already occupied in moves
-    const existingGame = await getActiveGameById(gameId)
-    const existingMoves = existingGame?.moves;
+    // Get the game from the database and ensure game belongs to user
+    const existingGame = await getActiveGameById(userId, gameId)
+
+    // Check that move doesn't already exist
+    const existingMoves = existingGame.map(b => (b.moves)).flat();
     if(existingMoves?.includes(game.moves[game.moves.length-1])){
-        res.sendStatus(400);
+        res.status(400).send("move already exists");
     }
 
     // Update the game in the database
     const newActiveGame = await updateActiveGame(gameId, game)
     res.status(200).json(newActiveGame)
+    
+  } catch (err) {
+    res.status(500).send(err)
+  }
 })
 
 // Delete Game
 activeGameHandler.delete("/:gameId", validateSchema(deleteActiveGameSchema), async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId
     const gameId = req.params.gameId;
-    await deletActiveGame(gameId);
-    res.status(200);
+
+    // check that user owns active game then delete
+    await deletActiveGame(userId, gameId);
+    res.status(200).send("deleted");
+  } catch (err) {
+    res.status(500).send(err);
+  }
 })
 
 export default activeGameHandler

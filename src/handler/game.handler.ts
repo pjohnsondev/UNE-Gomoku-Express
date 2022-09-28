@@ -5,10 +5,9 @@ import { deserializeUser } from "../middleware/deserializeUser";
 
 import { createGameSchema, getGameByIdSchema } from "../schema/game.schema";
 import { createGame, getGameById, getAllGamesDataByUser } from "../service/game.service";
-import mongoose from "mongoose";
 
 const gameHandler = express.Router();
-gameHandler.use(deserializeUser);
+gameHandler.use(deserializeUser); 
 
 // Get all games for current user
 gameHandler.get("/", async (req: Request, res: Response) => {
@@ -28,13 +27,16 @@ gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Reque
     try {
       const userId = req.userId;
       const gameId = req.params.gameId;
-
+      
+      // Search for game and match to user ID
       const game = await getGameById(userId, gameId);
 
+      // send error if no game exists
       if (!game) {
         return res.sendStatus(404);
       } 
-      // TODO: Potentially pass users to the json res so that users can be displayed in game history also (e.g. display "Paul v James: Winner James")
+
+      //return game
       return res.status(200).json({...game});
     } catch (err) {
       return res.status(500).send(err);
