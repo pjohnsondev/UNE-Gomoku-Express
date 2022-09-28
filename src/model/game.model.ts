@@ -9,8 +9,7 @@ export interface GameDocument extends Document {
     winner: string,
     date: Date,
     moves: [number]
-    playerBlack: UserDocument["_id"],
-    playerWhite: UserDocument["_id"],
+    userId: UserDocument["_id"],
 }
 
 const gameSchema = new mongoose.Schema({
@@ -19,8 +18,7 @@ const gameSchema = new mongoose.Schema({
     winner: String,
     date: Date,
     moves: [Number],
-    playerBlack: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    playerWhite: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 })
 
 export default mongoose.model<GameDocument>('Game', gameSchema)

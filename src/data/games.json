@@ -1,21 +1,32 @@
  [
     {
-        "_id": "62f875f70860a1d7140f99d1",
+        "_id": "63340821466dc6b58cc67000",
+        "gameId": "5",
         "boardSize": 9,
         "winner": "white",
-        "date": "2022-03-12",
-        "moves": [22,16,23,1,2,44],
-        "playerBlack": "632ee3f3f82770bfff38db84",
-        "playerWhite": "632ee39cf82770bfff38db83"
+        "date": "1335205543511",
+        "moves": [
+          22,
+          16,
+          23,
+          1,
+          2,
+          34
+        ],
+        "userId": "6333fda0ebbdc7e5f0bebe8f"        
     },
     {
-        "_id": "62f875f70860a1d7140f99d2",
+        "_id": "63340a94a8406f80bc9f7f58",
+        "gameId": "5",
         "boardSize": 9,
         "winner": "white",
-        "date": "2022-03-12",
-        "moves": [22,16,23,1,2,34],
-        "playerBlack": "632ee39cf82770bfff38db83",
-        "playerWhite": "632ee3f3f82770bfff38db84"
+        "date": "1335205543511",
+        "moves": [
+            22,
+            2,
+            34
+        ],
+        "userId": "63340a79a8406f80bc9f7f55"
     }
  ]   
     

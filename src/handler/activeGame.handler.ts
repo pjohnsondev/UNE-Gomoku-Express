@@ -1,9 +1,13 @@
 import express, { Request, Response } from "express";
+
 import validateSchema from "../middleware/validateSchema";
+import { deserializeUser } from "../middleware/deserializeUser";
+
 import { createActiveGameSchema, deleteActiveGameSchema, getActiveGameByIdSchema, updateActiveGameSchema } from "../schema/activeGame.schema";
 import { createActiveGame, getActiveGameById, updateActiveGame, deletActiveGame } from "../service/activeGame.service";
 
 const activeGameHandler = express.Router();
+activeGameHandler.use(deserializeUser);
 
 // Redirect empty get request
 activeGameHandler.get("/", (req: Request, res: Response) => {
@@ -18,18 +22,19 @@ activeGameHandler.post("/:gameId", validateSchema(createActiveGameSchema), async
 })
 
 // Get Active Game
-activeGameHandler.get("/:gameId", validateSchema(getActiveGameByIdSchema), async (req: Request, res: Response) => {
+activeGameHandler.get("/:gameId", async (req: Request, res: Response) => {
     try {
         const game = await getActiveGameById(req.params.gameId);
-        //TODO: add current user ID below rather than hard code
-        const userId = "632ee39cf82770bfff38db83"
+        
+        const userId = req.userId;
+        console.log(userId)
         if (!game) {
           return res.sendStatus(404);
         } 
-        // ensure users can only view their own active games
-        else if (userId != game.playerBlack && userId != game.playerWhite){
-          return res.redirect("/")
-        }
+        // ensure users can only view their own games
+      else if (userId != game.playerBlack && userId != game.playerWhite){
+        return res.redirect("/")
+      }
         return res.status(200).json({...game});
       } catch (err) {
         return res.status(500).send(err);

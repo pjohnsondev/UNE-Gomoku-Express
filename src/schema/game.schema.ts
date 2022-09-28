@@ -18,12 +18,9 @@ const payload = {
         moves: array(number({ 
             required_error: "Moves array is required",
         })).nonempty(),
-        playerWhite: string({
-            required_error: "White player userId is required",
-        }),
-        playerBlack: string({
-            required_error: "Black player userId is required",
-        }),
+        userId: string({
+            required_error: "userId is required",
+        })
     })
 }
 

@@ -1,14 +1,16 @@
 [
     {
-        "_id": "632ee39cf82770bfff38db83",
-        "username": "paul",
-        "password": "test123",
-        "games": ["62f875f70860a1d7140f99d1", "62f875f70860a1d7140f99d2"]
-    },
-    {
-        "_id": "632ee3f3f82770bfff38db84",
-        "username": "alsoPaul",
-        "password": "test123",
-        "games": ["62f875f70860a1d7140f99d1", "62f875f70860a1d7140f99d2"]
-    }
-]
+        "_id": "6333ba1bb57e6de7558af342",
+        "username": "Paulonline",
+        "password": "$2a$10$nEtqFmtzlbSbXEj4J4a23OXhB8Q4dopemDcHFIf7GOHSreOLRyvXy",
+        "createdAt": "1664334363727",
+        "updatedAt": "1664334363727"
+      },
+      {
+        "_id": "6333c50dd07791deaa8ce2cf",
+        "username": "Paul",
+        "password": "$2a$10$vru6Ura7k.lHxmtFVdMVoOOuOvKpsApAPkVtr9RQuvT.y9NtMca1u",
+        "createdAt": "1664337165522",
+        "updatedAt": "1664337165522"
+      }
+    ]

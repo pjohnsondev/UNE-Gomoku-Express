@@ -15,8 +15,8 @@ const activeGameSchema = new mongoose.Schema({
     boardSize: Number,
     date: Date,
     moves: [Number],
-    playerBlack: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    playerWhite: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
+    playerBlack: String,
+    playerWhite: String
 })
 
 export default mongoose.model<ActiveGameDocument>("ActiveGame", activeGameSchema);

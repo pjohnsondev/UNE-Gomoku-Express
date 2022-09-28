@@ -3,7 +3,7 @@ import { object, string, number, array, TypeOf } from "zod";
 
 const payload = { 
     body: object({
-        _id: string({    
+        gameId: string({    
             required_error: "Game id is required",
         }),
         boardSize: number({
