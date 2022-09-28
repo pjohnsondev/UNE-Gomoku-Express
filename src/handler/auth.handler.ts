@@ -69,4 +69,4 @@ authHandler.post("/login", async ( req: Request<{}, {}, LoginInput["body"]>, res
     }
 })
 
-
+export default authHandler;
