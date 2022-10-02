@@ -2,6 +2,7 @@
     {
         "_id": "732ee3f3f82770bfff38db84",
         "boardSize": 9,
+        "winner": "white",
         "date": "2022-03-12",
         "moves": [22,16,23,1,2,44],
         "userId":"6333fda0ebbdc7e5f0bebe8f"

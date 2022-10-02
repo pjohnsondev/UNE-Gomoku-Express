@@ -3,7 +3,7 @@ import { object, string, number, array, TypeOf } from "zod";
 
 const payload = { 
     body: object({
-        gameId: string({    
+        gameId: number({    
             required_error: "Game id is required",
         }),
         boardSize: number({
@@ -34,18 +34,9 @@ const updateDeleteParams = {
     })
 }
 
-const createParams = {
-    params: object ({
-        gameId: string({
-            required_error: "Game id is required",
-        })
-    })
-}
-
 //schema to create new active game in the database
 export const createActiveGameSchema = object({
     ...payload,
-    ...createParams
 });
 
 // schema to get current active game

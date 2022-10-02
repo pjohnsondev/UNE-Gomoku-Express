@@ -4,7 +4,7 @@ import userModel, { UserDocument } from "./user.model";
 // TODO: Consider breaking the game model into smaller models
 
 export interface GameDocument extends Document {
-    gameId: string,
+    gameId: number,
     boardSize: number,
     winner: string,
     date: Date,
@@ -13,7 +13,7 @@ export interface GameDocument extends Document {
 }
 
 const gameSchema = new mongoose.Schema({
-    gameId: String,
+    gameId: Number,
     boardSize: Number,
     winner: String,
     date: Date,

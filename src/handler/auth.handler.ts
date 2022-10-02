@@ -58,12 +58,11 @@ authHandler.post("/login", async ( req: Request<{}, {}, LoginInput["body"]>, res
             const token = signJwt( {username, _id: user._id});
 
             // return the user
-            return res.status(200).json({_id: user._id, token})
+            return res.status(200).json({_id: user._id, token, username: username})
         }
 
         // let user know if username or password are invalid
-        res.status(200).send("Username or Password are Invalid")
-        
+        res.status(400).send("Username or Password are Invalid")
     } catch (err) {
         return res.status(500).send(err);
     }

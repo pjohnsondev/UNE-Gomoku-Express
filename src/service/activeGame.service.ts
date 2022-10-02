@@ -13,9 +13,14 @@ export async function createActiveGame(input: DocumentDefinition<ActiveGameDocum
     return ActiveGameModel.create(input);
 }
 
-export async function updateActiveGame(gameId: string, input: DocumentDefinition<ActiveGameDocument>){
+export async function updateActiveGame(
+    gameId: string,
+    input: DocumentDefinition<ActiveGameDocument>
+    ) {
     return ActiveGameModel.findOneAndUpdate(
-        {_id: new mongoose.Types.ObjectId(gameId)},
+        {
+            _id: new mongoose.Types.ObjectId(gameId),
+        },
         input,
         {new: true}
     )

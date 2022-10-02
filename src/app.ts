@@ -24,6 +24,6 @@ app.use("/auth", authHandler)
 mongoose.connection.once('connected', () => {
     console.log('⚡️[server]: Connected to MongoDB.');
     app.listen(port, () => {
-        console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+        console.log(`⚡️[server]: Server is running at http://localhost:${port}/`);
       });
 })

@@ -5,6 +5,8 @@ import { deserializeUser } from "../middleware/deserializeUser";
 
 import { createActiveGameSchema, deleteActiveGameSchema, getActiveGameByIdSchema, updateActiveGameSchema } from "../schema/activeGame.schema";
 import { createActiveGame, getActiveGameById, updateActiveGame, deletActiveGame } from "../service/activeGame.service";
+import { createGame } from "../service/game.service";
+import { isWinner } from "../util/functions";
 
 const activeGameHandler = express.Router();
 activeGameHandler.use(deserializeUser);
@@ -15,7 +17,7 @@ activeGameHandler.get("/", (req: Request, res: Response) => {
 })
 
 // Create Game
-activeGameHandler.post("/:gameId", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
+activeGameHandler.post("/", validateSchema(createActiveGameSchema), async (req: Request, res: Response) => {
   const userId = req.userId;  
   const game = req.body;
   const newActiveGame = await createActiveGame(game)
@@ -37,7 +39,7 @@ activeGameHandler.get("/:gameId", async (req: Request, res: Response) => {
         } 
 
         //return game
-        return res.status(200).json({...game});
+        return res.status(200).json(...game);
       } catch (err) {
         return res.status(500).send(err);
       };
@@ -58,6 +60,21 @@ activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async 
     const existingMoves = existingGame.map(b => (b.moves)).flat();
     if(existingMoves?.includes(game.moves[game.moves.length-1])){
         res.status(400).send("move already exists");
+    }
+
+    // Check if there is a winner set game as completed game in database
+    isWinner(game)
+    if(isWinner(game)){
+      console.log("here")
+        if( game.moves.length%2 !==0){
+          game.winner = "black"
+        } else if(game.moves.length == game.boardSize) {
+          game.winner = "draw"
+        } else {
+          game.winner = "white"
+        }
+        const newActiveGame = await updateActiveGame(gameId, game)
+        res.status(200).json(newActiveGame)
     }
 
     // Update the game in the database
