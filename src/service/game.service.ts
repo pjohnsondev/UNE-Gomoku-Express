@@ -1,4 +1,4 @@
-import mongoose, { DocumentDefinition, FilterQuery } from 'mongoose';
+import mongoose, { DocumentDefinition, FilterQuery } from 'mongoose'; 
 import GameModel, { GameDocument } from '../model/game.model';
 
 export async function getGameById(userId: string, gameId: string) {

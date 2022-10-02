@@ -7,6 +7,7 @@ import { createActiveGameSchema, deleteActiveGameSchema, getActiveGameByIdSchema
 import { createActiveGame, getActiveGameById, updateActiveGame, deletActiveGame } from "../service/activeGame.service";
 import { createGame } from "../service/game.service";
 import { isWinner } from "../util/functions";
+import { syncBuiltinESMExports } from "module";
 
 const activeGameHandler = express.Router();
 activeGameHandler.use(deserializeUser);
@@ -63,20 +64,21 @@ activeGameHandler.put("/:gameId", validateSchema(updateActiveGameSchema), async 
     }
 
     // Check if there is a winner set game as completed game in database
-    isWinner(game)
-    if(isWinner(game)){
-      console.log("here")
+    const winner = await isWinner(game)
+    
+    if(winner){
         if( game.moves.length%2 !==0){
           game.winner = "black"
-        } else if(game.moves.length == game.boardSize) {
-          game.winner = "draw"
-        } else {
+        } else if(game.moves.length%2 == 0) {
           game.winner = "white"
+        } else {
+          game.winner = "draw"
         }
         const newActiveGame = await updateActiveGame(gameId, game)
         res.status(200).json(newActiveGame)
+        return
     }
-
+    
     // Update the game in the database
     const newActiveGame = await updateActiveGame(gameId, game)
     res.status(200).json(newActiveGame)

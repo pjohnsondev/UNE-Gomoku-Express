@@ -2,7 +2,7 @@ import { DocumentDefinition } from "mongoose"
 import { ActiveGameDocument } from "../model/activeGame.model"
 
 
-export function isWinner(game: DocumentDefinition<ActiveGameDocument>){
+export const isWinner = async (game: DocumentDefinition<ActiveGameDocument>) => {
     let moves = new Array()
     const movesReducer = game.moves.length%2 == 0 ? 
         game.moves.map(function(e, index){
@@ -27,7 +27,7 @@ export function isWinner(game: DocumentDefinition<ActiveGameDocument>){
         stonesNWSE(winLength, currentStone, boardSize, moves) === winLength
     )
         return true // there is a winner
-    if(moves.length === boardSize*boardSize) return true // there is a draw
+    if(moves.length == boardSize*boardSize) return true // there is a draw
 }
 
 const StonesNS = (winLength: number, index: number, boardSize: number, moves: number[]) => {
@@ -97,7 +97,7 @@ const StonesNESW = (winLength: number, index: number, boardSize: number, moves: 
         count ++
         tileId = tileId + boardSize - 1
     }
-    if(count === winLength) return count
+    if(count === winLength) {console.log("here"); return count}
 }
 
 const stonesNWSE = (winLength: number, index: number, boardSize: number, moves: number[]) => {

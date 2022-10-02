@@ -1,5 +1,5 @@
 import mongoose, { DocumentDefinition } from 'mongoose';
-import ActiveGameModel, {ActiveGameDocument} from '../model/activeGame.model';
+import ActiveGameModel, {ActiveGameDocument} from '../model/activeGame.model'; 
 
 export async function getActiveGameById(userId: string, gameId: string) {
     return await ActiveGameModel.find({userId: userId, _id: gameId}).lean();

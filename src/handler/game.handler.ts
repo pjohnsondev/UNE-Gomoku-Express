@@ -13,9 +13,7 @@ gameHandler.use(deserializeUser);
 gameHandler.get("/", async (req: Request, res: Response) => {
     try {
       const userId = req.userId;
-  
       const games = await getAllGamesDataByUser(userId);
-
       res.status(200).json(games)
     } catch(err) {
       return res.status(500).send(err);
@@ -23,7 +21,7 @@ gameHandler.get("/", async (req: Request, res: Response) => {
 })
 
 // Get Specific Game
-gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Request, res: Response) => {
+gameHandler.get("/:gameId", async (req: Request, res: Response) => {
     try {
       const userId = req.userId;
       const gameId = req.params.gameId;
@@ -37,11 +35,11 @@ gameHandler.get("/:gameId", validateSchema(getGameByIdSchema), async (req: Reque
       } 
 
       //return game
-      return res.status(200).json({...game});
+      return res.status(200).json(...game);
     } catch (err) {
       return res.status(500).send(err);
     };
-})  
+})
 
 // Create Game
 gameHandler.post("/", validateSchema(createGameSchema), async (req: Request, res: Response) => {
