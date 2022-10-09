@@ -46,7 +46,8 @@ const StonesNS = (winLength: number, index: number, boardSize: number, moves: nu
     while(count < 6 
             && tileId <= Math.pow(boardSize, 2)-1 
             && moves.includes(tileId))  {
-        count ++
+            count ++
+            tileId = tileId+boardSize
     }
     if(count === winLength) return count
 }
